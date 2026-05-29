@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOVA MARKET | Smart Shopping, Better Living</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='7' y1='55' x2='57' y2='9' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%236D22FF'/%3E%3Cstop offset='.48' stop-color='%231B39D8'/%3E%3Cstop offset='1' stop-color='%231CB9FF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='13' y='18' width='38' height='38' rx='8' fill='url(%23g)'/%3E%3Cpath d='M23 19v-3a9 9 0 0 1 18 0v20' fill='none' stroke='%231B39D8' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M13 22 45 54h-9L17 35v21h-8V27c0-3 2-5 4-5Z' fill='white'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-loader" id="pageLoader">
+    <div class="loader-brand" aria-label="NOVA MARKET loading">
+      <svg class="nova-logo-mark" viewBox="0 0 96 96" aria-hidden="true">
+        <defs>
+          <linearGradient id="loaderLogoGradient" x1="12" y1="86" x2="84" y2="10" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#6D22FF"></stop>
+            <stop offset="0.5" stop-color="#1B39D8"></stop>
+            <stop offset="1" stop-color="#1CB9FF"></stop>
+          </linearGradient>
+        </defs>
+        <path class="logo-bag" d="M28 27V20a20 20 0 0 1 40 0v36" fill="none" stroke="#1B39D8" stroke-width="8" stroke-linecap="round"></path>
+        <path d="M18 27h52c7 0 11 4 11 11v28c0 8-6 15-14 15H29c-8 0-14-6-14-14V34c0-4 1-6 3-7Z" fill="url(#loaderLogoGradient)"></path>
+        <path d="M17 30 65 78H51L25 52v29H14V39c0-6 2-9 3-9Z" fill="#ffffff"></path>
+        <path d="M17 30c4-6 11-5 16 0l32 32V30h12v47c0 3-2 5-5 5L17 30Z" fill="#ffffff" opacity="0.98"></path>
+      </svg>
+      <strong>NOVA MARKET</strong>
+      <span>SMART SHOPPING, BETTER LIVING</span>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <nav class="navbar" aria-label="Primary navigation">
+      <a class="brand" href="#home" aria-label="NOVA MARKET home">
+        <span class="brand-icon" aria-hidden="true">
+          <svg class="nova-logo-mark" viewBox="0 0 96 96">
+            <defs>
+              <linearGradient id="navLogoGradient" x1="12" y1="86" x2="84" y2="10" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#6D22FF"></stop>
+                <stop offset="0.5" stop-color="#1B39D8"></stop>
+                <stop offset="1" stop-color="#1CB9FF"></stop>
+              </linearGradient>
+            </defs>
+            <path d="M28 27V20a20 20 0 0 1 40 0v36" fill="none" stroke="#1B39D8" stroke-width="8" stroke-linecap="round"></path>
+            <path d="M18 27h52c7 0 11 4 11 11v28c0 8-6 15-14 15H29c-8 0-14-6-14-14V34c0-4 1-6 3-7Z" fill="url(#navLogoGradient)"></path>
+            <path d="M17 30 65 78H51L25 52v29H14V39c0-6 2-9 3-9Z" fill="#ffffff"></path>
+            <path d="M17 30c4-6 11-5 16 0l32 32V30h12v47c0 3-2 5-5 5L17 30Z" fill="#ffffff" opacity="0.98"></path>
+          </svg>
+        </span>
+        <span class="brand-wordmark">NOVA <span>MARKET</span></span>
+      </a>
+
+      <div class="nav-links" id="navLinks">
+        <a href="#home" data-i18n="nav.home">Home</a>
+        <a href="#categories" data-i18n="nav.categories">Categories</a>
+        <a href="#products" data-i18n="nav.products">Products</a>
+        <a href="#manage" id="adminNav" data-i18n="nav.admin" hidden>Admin</a>
+        <a href="#footer" data-i18n="nav.support">Support</a>
+      </div>
+
+      <div class="nav-actions">
+        <button class="icon-button" id="themeToggle" type="button" aria-label="Toggle theme">
+          <span class="sun">☀</span>
+          <span class="moon">☾</span>
+        </button>
+        <button class="lang-button" id="languageToggle" type="button" aria-label="Switch language">EN</button>
+        <button class="auth-trigger" id="authOpen" type="button" data-i18n="nav.signIn">Sign in</button>
+        <button class="cart-trigger" id="cartOpen" type="button" aria-label="Open cart">
+          <svg class="cart-symbol" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6.5 8.5h11l-.8 10a2 2 0 0 1-2 1.8H9.3a2 2 0 0 1-2-1.8l-.8-10Z"></path>
+            <path d="M9 8.5V7a3 3 0 0 1 6 0v1.5"></path>
+          </svg>
+          <span data-i18n="nav.cart">Cart</span>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+        <button class="menu-button" id="menuToggle" type="button" aria-label="Open menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-copy">
+        <p class="eyebrow" data-i18n="hero.eyebrow">Curated daily essentials</p>
+        <h1 data-i18n="hero.title">Premium products for modern living.</h1>
+        <p class="hero-text" data-i18n="hero.subtitle">Explore carefully selected tech, fashion, home, and lifestyle goods with a smooth shopping experience.</p>
+        <div class="hero-actions">
+          <a class="primary-button" href="#products" data-i18n="hero.shop">Shop collection</a>
+          <a class="secondary-button" href="#categories" data-i18n="hero.explore">Explore categories</a>
+        </div>
+        <div class="trust-row">
+          <div>
+            <strong>4.8/5</strong>
+            <span data-i18n="hero.rating">Average rating</span>
+          </div>
+          <div>
+            <strong>24h</strong>
+            <span data-i18n="hero.delivery">Fast dispatch</span>
+          </div>
+          <div>
+            <strong>18</strong>
+            <span data-i18n="hero.products">Demo products</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-showcase" aria-label="Featured marketplace products">
+        <div class="showcase-card showcase-large">
+          <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=80" alt="Wireless headphones">
+          <span data-i18n="hero.cardOne">Audio deals</span>
+        </div>
+        <div class="showcase-stack">
+          <div class="showcase-card">
+            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=700&q=80" alt="Smart watch">
+            <span data-i18n="hero.cardTwo">Smart tech</span>
+          </div>
+          <div class="showcase-card">
+            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80" alt="Running shoes">
+            <span data-i18n="hero.cardThree">Active style</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="categories-section" id="categories">
+      <div class="section-heading">
+        <p class="eyebrow" data-i18n="categories.eyebrow">Browse faster</p>
+        <h2 data-i18n="categories.title">Shop by category</h2>
+      </div>
+      <div class="category-grid" id="categoryGrid"></div>
+    </section>
+
+    <section class="products-section" id="products">
+      <div class="section-heading products-heading">
+        <div>
+          <p class="eyebrow" data-i18n="products.eyebrow">Popular now</p>
+          <h2 data-i18n="products.title">Featured products</h2>
+        </div>
+        <div class="result-count" id="resultCount"></div>
+      </div>
+
+      <div class="backend-strip">
+        <span class="backend-status" id="backendStatus">Demo mode</span>
+        <span class="user-badge" id="userBadge" hidden></span>
+      </div>
+
+      <div class="toolbar">
+        <label class="search-field">
+          <span data-i18n="filters.searchLabel">Search</span>
+          <input id="searchInput" type="search" autocomplete="off" data-i18n-placeholder="filters.searchPlaceholder" placeholder="Search products">
+        </label>
+        <label>
+          <span data-i18n="filters.categoryLabel">Category</span>
+          <select id="categoryFilter"></select>
+        </label>
+        <label>
+          <span data-i18n="filters.sortLabel">Sort</span>
+          <select id="sortSelect">
+            <option value="featured" data-i18n="filters.featured">Featured</option>
+            <option value="priceAsc" data-i18n="filters.priceAsc">Price: low to high</option>
+            <option value="priceDesc" data-i18n="filters.priceDesc">Price: high to low</option>
+            <option value="ratingDesc" data-i18n="filters.ratingDesc">Highest rating</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="product-grid" id="productGrid"></div>
+
+      <div class="empty-state" id="noProducts" hidden>
+        <div class="empty-icon">⌕</div>
+        <h3 data-i18n="empty.productsTitle">No products found</h3>
+        <p data-i18n="empty.productsText">Try another search, category, or sorting option.</p>
+      </div>
+    </section>
+
+    <section class="manage-section" id="manage" hidden>
+      <div class="admin-hero">
+        <div>
+          <p class="eyebrow" data-i18n="admin.eyebrow">Admin workspace</p>
+          <h2 id="adminWelcomeTitle">Welcome back, admin</h2>
+          <p class="manage-hint" data-i18n="admin.hint">Create catalog items, attach product photos, and publish them to the storefront.</p>
+        </div>
+        <div class="admin-hero-side">
+          <span class="admin-role-pill" id="adminRolePill">ADMIN</span>
+          <div class="admin-status-row" aria-label="Service status">
+            <span class="admin-status-pill is-live" data-i18n="admin.marketStatus">Market API</span>
+            <span class="admin-status-pill is-live" data-i18n="admin.filesStatus">File service</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-quick-actions">
+        <button type="button" data-admin-jump="productForm">
+          <strong data-i18n="admin.quickCreate">Create product</strong>
+          <span data-i18n="admin.quickCreateText">Add a new item with photo and stock.</span>
+        </button>
+        <button type="button" data-admin-jump="adminTablePanel">
+          <strong data-i18n="admin.quickCatalog">Manage catalog</strong>
+          <span data-i18n="admin.quickCatalogText">Edit price, stock, category or delete items.</span>
+        </button>
+        <button type="button" data-admin-jump="adminMetrics">
+          <strong data-i18n="admin.quickOverview">Overview</strong>
+          <span data-i18n="admin.quickOverviewText">Users, products and stock summary.</span>
+        </button>
+      </div>
+
+      <div class="admin-metrics" id="adminMetrics">
+        <article class="metric-card">
+          <span data-i18n="admin.metricUsers">Users</span>
+          <strong id="metricUsers">0</strong>
+        </article>
+        <article class="metric-card">
+          <span data-i18n="admin.metricProducts">Products</span>
+          <strong id="metricProducts">0</strong>
+        </article>
+        <article class="metric-card">
+          <span data-i18n="admin.metricStock">Total stock</span>
+          <strong id="metricStock">0</strong>
+        </article>
+        <article class="metric-card">
+          <span data-i18n="admin.metricCategories">Categories</span>
+          <strong id="metricCategories">0</strong>
+        </article>
+      </div>
+
+      <div class="admin-layout">
+        <form class="product-form" id="productForm">
+          <div class="form-panel">
+            <div class="form-panel-heading">
+              <span class="panel-index">01</span>
+              <h3 data-i18n="admin.productDetails">Product details</h3>
+            </div>
+            <label>
+              <span data-i18n="admin.name">Product name</span>
+              <input name="name" id="productNameInput" type="text" required placeholder="Sony WH-1000XM">
+            </label>
+            <label>
+              <span data-i18n="admin.description">Description</span>
+              <textarea name="description" id="productDescriptionInput" required rows="4" placeholder="Short product description"></textarea>
+            </label>
+          </div>
+
+          <div class="form-panel">
+            <div class="form-panel-heading">
+              <span class="panel-index">02</span>
+              <h3 data-i18n="admin.inventory">Inventory</h3>
+            </div>
+            <div class="form-grid-compact">
+              <label>
+                <span data-i18n="admin.price">Price</span>
+                <input name="price" id="productPriceInput" type="number" min="1" step="0.01" required placeholder="129">
+              </label>
+              <label>
+                <span data-i18n="admin.stock">Stock</span>
+                <input name="stock" id="productStockInput" type="number" min="0" step="1" required placeholder="24">
+              </label>
+            </div>
+            <label>
+              <span data-i18n="admin.category">Category</span>
+              <select name="categoryId" id="productCategoryInput" required></select>
+            </label>
+            <label>
+              <span data-i18n="admin.badge">Product label</span>
+              <select name="badge" id="productBadgeInput" required>
+                <option value="new" data-i18n="badges.new">New</option>
+                <option value="popular" data-i18n="badges.popular">Popular</option>
+                <option value="top" data-i18n="badges.top">Top sales</option>
+                <option value="hot" data-i18n="badges.hot">Trending</option>
+                <option value="sale" data-i18n="badges.sale">Sale</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="form-panel">
+            <div class="form-panel-heading">
+              <span class="panel-index">03</span>
+              <h3 data-i18n="admin.media">Media</h3>
+            </div>
+            <label class="upload-control">
+              <span data-i18n="admin.photo">Photo</span>
+              <input name="file" id="productPhotoInput" type="file" accept="image/*">
+              <strong data-i18n="admin.uploadTitle">Choose product image</strong>
+              <small id="photoFileName" data-i18n="admin.uploadHint">JPG, PNG or WebP up to 20MB</small>
+            </label>
+          </div>
+
+          <div class="admin-form-actions">
+            <button class="primary-button form-submit" id="productSubmitButton" type="submit" data-i18n="buttons.saveProduct">Add product</button>
+            <button class="secondary-button reset-edit-button" id="productResetButton" type="button" data-i18n="buttons.clearForm">Clear</button>
+          </div>
+        </form>
+
+        <aside class="admin-preview" aria-label="Product preview">
+          <div class="preview-media">
+            <img id="adminPreviewImage" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80" alt="">
+          </div>
+          <div class="preview-body">
+            <span class="preview-kicker" id="adminPreviewCategory" data-i18n="admin.previewCategory">Category</span>
+            <h3 id="adminPreviewName" data-i18n="admin.previewTitle">Product preview</h3>
+            <p id="adminPreviewDescription" data-i18n="admin.previewEmpty">Fill the form to see how the product will look in the catalog.</p>
+            <div class="preview-meta">
+              <strong id="adminPreviewPrice">$0</strong>
+              <span id="adminPreviewStock" data-i18n="admin.previewStock">Stock: 0</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <div class="admin-table-panel" id="adminTablePanel">
+        <div class="admin-table-header">
+          <div>
+            <p class="eyebrow" data-i18n="admin.catalogEyebrow">Catalog</p>
+            <h3 data-i18n="admin.catalogTitle">Products in system</h3>
+          </div>
+          <button class="secondary-button" id="refreshAdminButton" type="button" data-i18n="admin.refresh">Refresh</button>
+        </div>
+        <div class="admin-table-scroll">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th data-i18n="admin.tableProduct">Product</th>
+                <th data-i18n="admin.tableCategory">Category</th>
+                <th data-i18n="admin.tablePrice">Price</th>
+                <th data-i18n="admin.tableStock">Stock</th>
+                <th data-i18n="admin.tableBadge">Label</th>
+                <th data-i18n="admin.tableStatus">Status</th>
+                <th data-i18n="admin.tableActions">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminProductRows"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="overlay" id="cartOverlay" hidden></div>
+  <aside class="cart-panel" id="cartPanel" aria-label="Shopping cart" aria-hidden="true">
+    <div class="cart-header">
+      <div>
+        <p class="eyebrow" data-i18n="cart.eyebrow">Your selection</p>
+        <h2 data-i18n="cart.title">Shopping cart</h2>
+      </div>
+      <button class="icon-button" id="cartClose" type="button" aria-label="Close cart">×</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="empty-state cart-empty" id="emptyCart">
+      <div class="empty-icon">◌</div>
+      <h3 data-i18n="empty.cartTitle">Your cart is empty</h3>
+      <p data-i18n="empty.cartText">Add products to see them here.</p>
+    </div>
+    <div class="cart-footer">
+      <div class="summary-row">
+        <span data-i18n="cart.subtotal">Subtotal</span>
+        <strong id="cartTotal">$0.00</strong>
+      </div>
+      <button class="primary-button full-width" id="checkoutButton" type="button" data-i18n="cart.checkout">Checkout</button>
+    </div>
+  </aside>
+
+  <div class="modal-backdrop" id="modalBackdrop" hidden></div>
+  <section class="product-modal" id="productModal" aria-hidden="true" aria-label="Product details">
+    <button class="modal-close" id="modalClose" type="button" aria-label="Close details">×</button>
+    <div class="modal-media">
+      <img id="modalImage" src="" alt="">
+      <span class="badge" id="modalBadge"></span>
+    </div>
+    <div class="modal-body">
+      <p class="eyebrow" id="modalCategory"></p>
+      <h2 id="modalName"></h2>
+      <div class="rating-line" id="modalRating"></div>
+      <p class="modal-description" id="modalDescription"></p>
+      <div class="modal-meta">
+        <strong id="modalPrice"></strong>
+        <span id="modalStock"></span>
+      </div>
+      <div class="modal-actions">
+        <button class="primary-button" id="modalAdd" type="button" data-i18n="buttons.addToCart">Add to cart</button>
+        <button class="secondary-button" id="modalSimilar" type="button" data-i18n="buttons.viewSimilar">View similar</button>
+      </div>
+    </div>
+  </section>
+
+
+  <div class="auth-backdrop" id="authBackdrop" hidden></div>
+  <section class="auth-modal" id="authModal" aria-hidden="true" aria-label="Account">
+    <button class="modal-close" id="authClose" type="button" aria-label="Close account">×</button>
+    <p class="eyebrow" data-i18n="auth.subtitle">Use email and password from the backend</p>
+    <h2 data-i18n="auth.title">Welcome to NOVA</h2>
+    <div class="profile-card" id="profileCard" hidden>
+      <span class="profile-avatar" id="profileAvatar">A</span>
+      <div>
+        <strong id="profileName">NOVA Admin</strong>
+        <span id="profileEmail">admin@nova.kz</span>
+        <small id="profileRole">ADMIN</small>
+      </div>
+    </div>
+    <div class="auth-tabs" id="authTabs">
+      <button class="is-active" type="button" data-auth-tab="login" data-i18n="auth.login">Login</button>
+      <button type="button" data-auth-tab="register" data-i18n="auth.register">Register</button>
+    </div>
+    <form class="auth-form" id="loginForm">
+      <label>
+        <span data-i18n="auth.email">Email</span>
+        <input name="email" type="email" autocomplete="email" required>
+      </label>
+      <label>
+        <span data-i18n="auth.password">Password</span>
+        <input name="password" type="password" autocomplete="current-password" required minlength="6">
+      </label>
+      <button class="primary-button full-width" type="submit" data-i18n="auth.login">Login</button>
+    </form>
+    <form class="auth-form" id="registerForm" hidden>
+      <label>
+        <span data-i18n="auth.fullName">Full name</span>
+        <input name="fullName" type="text" autocomplete="name" required>
+      </label>
+      <label>
+        <span data-i18n="auth.email">Email</span>
+        <input name="email" type="email" autocomplete="email" required>
+      </label>
+      <label>
+        <span data-i18n="auth.password">Password</span>
+        <input name="password" type="password" autocomplete="new-password" required minlength="6">
+      </label>
+      <button class="primary-button full-width" type="submit" data-i18n="auth.register">Register</button>
+    </form>
+    <button class="secondary-button full-width logout-button" id="logoutButton" type="button" data-i18n="auth.logout" hidden>Logout</button>
+  </section>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+  <footer class="footer" id="footer">
+    <div>
+      <a class="brand" href="#home">
+        <span class="brand-icon" aria-hidden="true">
+          <svg class="nova-logo-mark" viewBox="0 0 96 96">
+            <defs>
+              <linearGradient id="footerLogoGradient" x1="12" y1="86" x2="84" y2="10" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#6D22FF"></stop>
+                <stop offset="0.5" stop-color="#1B39D8"></stop>
+                <stop offset="1" stop-color="#1CB9FF"></stop>
+              </linearGradient>
+            </defs>
+            <path d="M28 27V20a20 20 0 0 1 40 0v36" fill="none" stroke="#1B39D8" stroke-width="8" stroke-linecap="round"></path>
+            <path d="M18 27h52c7 0 11 4 11 11v28c0 8-6 15-14 15H29c-8 0-14-6-14-14V34c0-4 1-6 3-7Z" fill="url(#footerLogoGradient)"></path>
+            <path d="M17 30 65 78H51L25 52v29H14V39c0-6 2-9 3-9Z" fill="#ffffff"></path>
+            <path d="M17 30c4-6 11-5 16 0l32 32V30h12v47c0 3-2 5-5 5L17 30Z" fill="#ffffff" opacity="0.98"></path>
+          </svg>
+        </span>
+        <span class="brand-wordmark">NOVA <span>MARKET</span></span>
+      </a>
+      <p data-i18n="footer.text">A polished frontend marketplace demo built with HTML, CSS, and JavaScript.</p>
+    </div>
+    <div>
+      <h3 data-i18n="footer.shop">Shop</h3>
+      <a href="#products" data-i18n="footer.featured">Featured</a>
+      <a href="#categories" data-i18n="footer.categories">Categories</a>
+      <a href="#home" data-i18n="footer.deals">Daily deals</a>
+    </div>
+    <div>
+      <h3 data-i18n="footer.help">Help</h3>
+      <a href="#footer" data-i18n="footer.shipping">Shipping</a>
+      <a href="#footer" data-i18n="footer.returns">Returns</a>
+      <a href="#footer" data-i18n="footer.contact">Contact</a>
+    </div>
+    <div>
+      <h3 data-i18n="footer.newsletter">Newsletter</h3>
+      <p data-i18n="footer.newsletterText">Get updates about new drops and seasonal offers.</p>
+      <div class="newsletter">
+        <input type="email" data-i18n-placeholder="footer.emailPlaceholder" placeholder="Email address">
+        <button type="button" data-i18n="footer.join">Join</button>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

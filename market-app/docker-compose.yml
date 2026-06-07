@@ -24,6 +24,19 @@ services:
     volumes:
       - market_minio_data:/data
 
+  redis:
+    image: redis:7
+    container_name: market-redis
+    ports:
+      - "6379:6379"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: market-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
 volumes:
   market_postgres_data:
   market_minio_data:

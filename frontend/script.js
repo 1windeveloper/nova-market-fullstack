@@ -321,6 +321,20 @@ const translations = {
     buttons: { addToCart: "Add to cart", details: "Details", viewSimilar: "View similar", saveProduct: "Add product", updateProduct: "Save changes", clearForm: "Clear", uploadPhoto: "Upload photo" },
     badges: { new: "New", sale: "Sale", popular: "Popular", top: "Top sales", hot: "Trending" },
     cart: { eyebrow: "Your selection", title: "Shopping cart", subtotal: "Subtotal", checkout: "Checkout", remove: "Remove" },
+    payment: {
+      eyebrow: "Secure checkout",
+      title: "Payment",
+      subtitle: "Create an order and pay it through the backend transaction endpoint.",
+      customer: "Customer",
+      total: "Total",
+      cancel: "Cancel",
+      pay: "Pay order",
+      creating: "Creating order...",
+      paying: "Processing payment...",
+      success: "Payment successful. Order #{orderId} is paid.",
+      empty: "Add products before checkout.",
+      loginRequired: "Sign in before checkout."
+    },
     empty: {
       productsTitle: "No products found",
       productsText: "Try another search, category, or sorting option.",
@@ -441,6 +455,20 @@ const translations = {
     buttons: { addToCart: "В корзину", details: "Подробнее", viewSimilar: "Похожие товары", saveProduct: "Добавить товар", updateProduct: "Сохранить", clearForm: "Очистить", uploadPhoto: "Загрузить фото" },
     badges: { new: "Новинка", sale: "Скидка", popular: "Популярно", top: "Топ продаж", hot: "Актуально" },
     cart: { eyebrow: "Ваш выбор", title: "Корзина", subtotal: "Итого", checkout: "Оформить", remove: "Удалить" },
+    payment: {
+      eyebrow: "Безопасное оформление",
+      title: "Оплата",
+      subtitle: "Создает заказ и оплачивает его через backend transaction endpoint.",
+      customer: "Покупатель",
+      total: "Сумма",
+      cancel: "Отмена",
+      pay: "Оплатить заказ",
+      creating: "Создаем заказ...",
+      paying: "Проводим оплату...",
+      success: "Оплата прошла. Заказ #{orderId} оплачен.",
+      empty: "Добавьте товары перед оформлением.",
+      loginRequired: "Войдите в аккаунт перед оформлением."
+    },
     empty: {
       productsTitle: "Товары не найдены",
       productsText: "Попробуйте изменить поиск, категорию или сортировку.",
@@ -568,6 +596,15 @@ const els = {
   cartCount: document.getElementById("cartCount"),
   cartTotal: document.getElementById("cartTotal"),
   checkoutButton: document.getElementById("checkoutButton"),
+  paymentBackdrop: document.getElementById("paymentBackdrop"),
+  paymentModal: document.getElementById("paymentModal"),
+  paymentClose: document.getElementById("paymentClose"),
+  paymentCancel: document.getElementById("paymentCancel"),
+  paymentConfirm: document.getElementById("paymentConfirm"),
+  paymentCustomer: document.getElementById("paymentCustomer"),
+  paymentTotal: document.getElementById("paymentTotal"),
+  paymentItems: document.getElementById("paymentItems"),
+  paymentStatus: document.getElementById("paymentStatus"),
   modalBackdrop: document.getElementById("modalBackdrop"),
   productModal: document.getElementById("productModal"),
   modalClose: document.getElementById("modalClose"),
@@ -1180,6 +1217,77 @@ function closeCart() {
   document.body.classList.remove("no-scroll");
 }
 
+function renderPayment() {
+  if (!els.paymentModal) return;
+  els.paymentCustomer.textContent = state.user?.email || "guest";
+  els.paymentTotal.textContent = money(cartTotal());
+  els.paymentItems.innerHTML = state.cart.map((item) => {
+    const product = products.find((entry) => entry.id === item.id);
+    if (!product) return "";
+    return `
+      <div class="payment-item">
+        <span>${product.name[state.language]} × ${item.quantity}</span>
+        <strong>${money(product.price * item.quantity)}</strong>
+      </div>
+    `;
+  }).join("");
+  els.paymentStatus.hidden = true;
+  els.paymentStatus.textContent = "";
+  els.paymentConfirm.disabled = state.cart.length === 0;
+  els.paymentConfirm.textContent = t("payment.pay");
+}
+
+function openPayment() {
+  if (!state.cart.length) {
+    showToast(t("payment.empty"));
+    return;
+  }
+  if (!state.user) {
+    showToast(t("payment.loginRequired"));
+    closeCart();
+    openAuth();
+    return;
+  }
+  renderPayment();
+  els.paymentBackdrop.hidden = false;
+  els.paymentModal.classList.add("is-open");
+  els.paymentModal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("no-scroll");
+}
+
+function closePayment() {
+  els.paymentBackdrop.hidden = true;
+  els.paymentModal.classList.remove("is-open");
+  els.paymentModal.setAttribute("aria-hidden", "true");
+  if (!els.cartPanel.classList.contains("is-open") && !els.productModal.classList.contains("is-open")) {
+    document.body.classList.remove("no-scroll");
+  }
+}
+
+async function confirmPayment() {
+  if (!state.user || !state.cart.length) return;
+  els.paymentConfirm.disabled = true;
+  els.paymentStatus.hidden = false;
+  els.paymentStatus.textContent = t("payment.creating");
+  const order = await apiJson("/api/orders", {
+    method: "POST",
+    body: JSON.stringify({
+      userId: state.user.id,
+      items: state.cart.map((item) => ({ productId: item.id, quantity: item.quantity }))
+    })
+  });
+  els.paymentStatus.textContent = t("payment.paying");
+  await apiJson(`/api/orders/${order.id}/payments`, { method: "POST" });
+  els.paymentStatus.textContent = t("payment.success", { orderId: order.id });
+  state.cart = [];
+  renderCart();
+  await loadBackendData({ silent: true });
+  window.setTimeout(() => {
+    closePayment();
+    closeCart();
+  }, 1100);
+}
+
 function openModal(id) {
   const product = products.find((item) => item.id === id);
   if (!product) return;
@@ -1299,9 +1407,16 @@ function bindEvents() {
     if (remove) removeFromCart(Number(remove.dataset.remove));
   });
 
-  els.checkoutButton.addEventListener("click", () => {
-    showToast(t("toast.checkout", { total: money(cartTotal()) }));
-  });
+  els.checkoutButton.addEventListener("click", openPayment);
+  els.paymentClose.addEventListener("click", closePayment);
+  els.paymentCancel.addEventListener("click", closePayment);
+  els.paymentBackdrop.addEventListener("click", closePayment);
+  els.paymentConfirm.addEventListener("click", () => confirmPayment().catch((error) => {
+    els.paymentConfirm.disabled = false;
+    els.paymentConfirm.textContent = t("payment.pay");
+    els.paymentStatus.hidden = false;
+    els.paymentStatus.textContent = friendlyError(error);
+  }));
 
   els.modalClose.addEventListener("click", closeModal);
   els.modalBackdrop.addEventListener("click", closeModal);
@@ -1368,6 +1483,7 @@ function bindEvents() {
     if (event.key === "Escape") {
       closeModal();
       closeCart();
+      closePayment();
       els.navLinks.classList.remove("is-open");
     }
   });

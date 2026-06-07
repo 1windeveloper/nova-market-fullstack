@@ -1,12 +1,9 @@
 spring:
-  cache:
-    type: simple
   autoconfigure:
     exclude:
       - org.springframework.boot.amqp.autoconfigure.RabbitAutoConfiguration
-      - org.springframework.boot.data.redis.autoconfigure.RedisAutoConfiguration
   datasource:
-    url: jdbc:h2:mem:market_app_test;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE
+    url: jdbc:h2:mem:notification_service_test;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE
     username: sa
     password:
   jpa:

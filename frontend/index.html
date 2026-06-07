@@ -362,6 +362,32 @@
     </div>
   </aside>
 
+  <div class="payment-backdrop" id="paymentBackdrop" hidden></div>
+  <section class="payment-modal" id="paymentModal" aria-hidden="true" aria-label="Checkout payment">
+    <button class="modal-close" id="paymentClose" type="button" aria-label="Close payment">×</button>
+    <div class="payment-heading">
+      <p class="eyebrow" data-i18n="payment.eyebrow">Secure checkout</p>
+      <h2 data-i18n="payment.title">Payment</h2>
+      <p data-i18n="payment.subtitle">Create an order and pay it through the backend transaction endpoint.</p>
+    </div>
+    <div class="payment-grid">
+      <div class="payment-summary">
+        <span data-i18n="payment.customer">Customer</span>
+        <strong id="paymentCustomer">guest</strong>
+      </div>
+      <div class="payment-summary">
+        <span data-i18n="payment.total">Total</span>
+        <strong id="paymentTotal">$0</strong>
+      </div>
+    </div>
+    <div class="payment-items" id="paymentItems"></div>
+    <div class="payment-status" id="paymentStatus" hidden></div>
+    <div class="payment-actions">
+      <button class="secondary-button" id="paymentCancel" type="button" data-i18n="payment.cancel">Cancel</button>
+      <button class="primary-button" id="paymentConfirm" type="button" data-i18n="payment.pay">Pay order</button>
+    </div>
+  </section>
+
   <div class="modal-backdrop" id="modalBackdrop" hidden></div>
   <section class="product-modal" id="productModal" aria-hidden="true" aria-label="Product details">
     <button class="modal-close" id="modalClose" type="button" aria-label="Close details">×</button>

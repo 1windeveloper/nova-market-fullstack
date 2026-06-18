@@ -285,8 +285,8 @@ let categories = [...demoCategories];
 let backendCategories = [];
 let backendProducts = [];
 
-const API_BASE = "http://localhost:8080";
-const FILE_API_BASE = "http://localhost:8081";
+const API_BASE = "http://localhost:8085";
+const FILE_API_BASE = "http://localhost:8085";
 const defaultImage = "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80";
 
 const translations = {

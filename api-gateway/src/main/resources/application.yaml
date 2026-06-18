@@ -4,33 +4,32 @@ server:
 spring:
   application:
     name: api-gateway
-  cloud:
-    gateway:
-      mvc:
-        routes:
-          - id: market-app-auth
-            uri: ${MARKET_APP_URL:http://localhost:8080}
-            predicates:
-              - Path=/api/auth/**
-          - id: market-app-catalog
-            uri: ${MARKET_APP_URL:http://localhost:8080}
-            predicates:
-              - Path=/api/categories/**,/api/products/**,/api/admin/**
-          - id: market-app-orders
-            uri: ${MARKET_APP_URL:http://localhost:8080}
-            predicates:
-              - Path=/api/orders/**,/api/users/**
-          - id: market-file-service
-            uri: ${MARKET_FILE_SERVICE_URL:http://localhost:8081}
-            predicates:
-              - Path=/api/files/**
-          - id: notification-service
-            uri: ${NOTIFICATION_SERVICE_URL:http://localhost:8082}
-            predicates:
-              - Path=/api/notifications/**
+
+nova:
+  routes:
+    market-app-url: ${MARKET_APP_URL:http://localhost:8080}
+    market-file-service-url: ${MARKET_FILE_SERVICE_URL:http://localhost:8081}
+    notification-service-url: ${NOTIFICATION_SERVICE_URL:http://localhost:8082}
 
 management:
   endpoints:
     web:
       exposure:
         include: health,info
+
+logging:
+  pattern:
+    level: "%5p [requestId:%X{requestId:-none}]"
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: Market App API
+        url: http://localhost:8080/v3/api-docs
+      - name: File Service API
+        url: http://localhost:8081/v3/api-docs
+      - name: Notification Service API
+        url: http://localhost:8082/v3/api-docs
+      - name: API Gateway
+        url: /v3/api-docs
